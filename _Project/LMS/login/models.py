@@ -22,13 +22,11 @@ class Role(models.Model):
         return self.role
 
 class LMSUser(models.Model):
-      
     user = models.OneToOneField(User, primary_key = True, on_delete=models.CASCADE, null = False)
     role = models.ManyToManyField(Role, blank=True)
     first_name = models.CharField(max_length=10, null=True)
     last_name = models.CharField(max_length=10, null=True) 
     email = models.CharField(max_length=20, null=True) 
-    password = models.CharField(max_length=15, null=True) 
     
     def is_admin(self):
         return (Role.objects.get(role=Role.ADMINISTRATOR) in self.role.all() or self.user.is_staff or self.user.is_superuser)
