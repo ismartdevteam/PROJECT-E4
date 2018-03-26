@@ -46,9 +46,8 @@ class LMSUser(models.Model):
 
 class Course(models.Model):
     course_id = models.IntegerField(primary_key=True)
-    teacher_id = models.IntegerField()
+    teacher_id = models.ForeignKey(LMSUser, on_delete=models.CASCADE)
     course_level = models.FloatField()
-    teacher_feedback = models.CharField(max_length=100)
 
     def __str__(self):
         return '\nCourse ID: {}\nTeacher ID: {}\nCourse Level: {}\nTeacher Feedback: {}\n'.format(self.course_id, self.teacher_id, self.course_level, self.teacher_feedback)
@@ -80,3 +79,62 @@ class Question(models.Model):
 
     def __str__(self):
         return '\nQuestion ID: {}\nExercise ID: {}\n'.format(self.question_id, self.exercise_id)
+
+class Connection(models.Model):
+    connection_id = models.IntegerField(primary_key=True)
+    connection_date = models.DateTimeField()
+    user_id = models.ForeignKey(LMSUser, on_delete=models.CASCADE)
+
+class Student_Course(models.Model):
+    student_course_id = models.IntegerField(primary_key=True)
+    student_id = models.ForeignKey(LMSUser, on_delete=models.CASCADE)
+    course_id = models.ForeignKey(Course, on_delete=models.CASCADE)
+    teacher_feedback = models.CharField(max_length=100)
+
+class Student_Sheet(models.Model):
+    student_sheet_id = models.IntegerField(primary_key=True)
+    student_id = models.ForeignKey(LMSUser, on_delete=models.CASCADE)
+    sheet_id = models.ForeignKey(Sheet, on_delete=models.CASCADE)
+    score = models.FloatField()
+    feedback = models.CharField(max_length=100)
+    total_time_spent = models.IntegerField()
+
+class Student_Exercise(models.Model):
+    student_exercise_id = models.IntegerField(primary_key=True)
+    student_id = models.ForeignKey(LMSUser, on_delete=models.CASCADE)
+    exercise_id = models.ForeignKey(Exercise, on_delete=models.CASCADE)
+    number_of_attempts = models.IntegerField()
+    number_of_tries = models.FloatField()
+    time_spend_by_exercises = models.IntegerField()
+    time_spend_succeed = models.IntegerField()
+    total_time_spent = models.IntegerField()
+    number_abort = models.IntegerField()
+    score = models.FloatField()
+    number_correct_attempts = models.IntegerField()
+    student_level = models.CharField(max_length=2)
+    completed_time = models.IntegerField()
+    feedback = models.CharField(max_length=100)
+    submit_date = models.DateTimeField()
+    ##student_exercisecol = models.CharField(max_length=45)
+
+class Student_Question(models.Model):
+    student_question_id = models.IntegerField(primary_key=True)
+    student_id = models.ForeignKey(LMSUser, on_delete=models.CASCADE)
+    Question_id = models.ForeignKey(Question, on_delete=models.CASCADE)
+
+    SKIPPED = 'SK'
+    CORRECT = 'CR'
+    INCORRECT = 'IN'
+    STARTED = 'ST'
+    NULL = 'NL'
+    STATUSES = (
+        (SKIPPED, 'Skipped'),
+        (CORRECT, 'Correct'),
+        (INCORRECT, 'Incorrect'),
+        (STARTED, 'Started'),
+        (NULL, 'Null')
+    )
+    
+    question_status = models.IntegerField(max_length=2, choices=STATUSES, null = True, default=NULL)
+    time_spent = models.IntegerField()
+    submit_date = models.DateTimeField()
