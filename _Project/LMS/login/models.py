@@ -56,6 +56,7 @@ class Sheet(models.Model):
     sheet_name = models.CharField(max_length=25)
     number_exercises = models.IntegerField()
     end_date = models.DateTimeField()
+    #sheet_status = finished or not finished #we need something to indicate that a sheet was submitted by the student.
 
     def __str__(self):
         return '\nSheet ID: {}\nCourse ID: {}\nSheet Name: {}\nNumber of Exercises: {}\nEnd Date: {}\n'.format(self.sheet_id, self.course_id, self.sheet_name, self.number_exercises, self.end_date)
