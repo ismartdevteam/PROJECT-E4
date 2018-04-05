@@ -21,7 +21,6 @@ class Role(models.Model):
 class LMSUser(models.Model):
     user = models.OneToOneField(User, primary_key = True, on_delete=models.CASCADE, null = False)
     role = models.ManyToManyField(Role, blank=True)
-    
     def is_admin(self):
         return (Role.objects.get(role=Role.ADMINISTRATOR) in self.role.all() or self.user.is_staff or self.user.is_superuser)
   

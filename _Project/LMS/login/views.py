@@ -11,20 +11,16 @@ logger = logging.getLogger(__name__)
 @login_required
 @csrf_exempt
 def index(request):
-	logger.info(request.user)
-	print(request.user.lmsuser)
-	if request.user.lmsuser.role == 'TH':
-		return HttpResponseRedirect('/teacher/courses')
-	else:
-		return HttpResponseRedirect('/student/courses')
+	try:
+		if request.user.pluser.have_role(Role.TEACHER):
+			return HttpResponseRedirect('/teacher/courses')
+		else:
+			return HttpResponseRedirect('/student/courses')
+	except User.DoesNotExist:
+		return HttpResponseRedirect('/admin')
 
-def login(request):
-	logger.info(request.user)
-	print(request.user.lmsuser)
-	if request.user.lmsuser.role == 'TH':
-		return HttpResponseRedirect('/teacher/courses')
-	else:
-		return HttpResponseRedirect('/student/courses')
+
+
 
 
 

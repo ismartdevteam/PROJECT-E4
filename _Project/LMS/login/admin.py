@@ -27,7 +27,7 @@ class CourseAdmin(admin.ModelAdmin):
 
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
-
+admin.site.register(LMSUser)
 admin.site.register(Sheet)
 
 admin.site.register(Exercise)
