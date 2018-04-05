@@ -48,7 +48,7 @@ class Course(models.Model):
     course_level = models.FloatField()
 
     def __str__(self):
-        return '\nCourse ID: {}\nTeacher ID: {}\nCourse Level: {}\nTeacher Feedback: {}\n'.format(self.course_id, self.teacher_id, self.course_level, self.teacher_feedback)
+        return '\nCourse ID: {}\nTeacher ID: {}\nCourse Level: {}\n'.format(self.course_id, self.teacher_id, self.course_level)
 
 class Sheet(models.Model):
     sheet_id = models.IntegerField(primary_key=True)
