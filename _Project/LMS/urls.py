@@ -7,5 +7,5 @@ path('/', include('login.urls')),
 path('admin/', admin.site.urls),
 path('anticheat/', include('anticheat.urls')),
 path('student/', include('student.urls')),
-path('teacher/', include('teacher.urls')),
+path('teacher/', include('teacher.urls'))
 ]
