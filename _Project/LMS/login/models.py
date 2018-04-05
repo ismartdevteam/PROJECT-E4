@@ -2,9 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class Role(models.Model):
-    """ Default role are created at migration. See 'playexo/migrations/xxxx_add_role_data.py'
-        If you add a new default role, do not forget to add it to the migration file. """
-     
     ADMINISTRATOR = 'AD'
     TEACHER = 'TH'
     STUDENT = 'ST'
@@ -13,7 +10,7 @@ class Role(models.Model):
         (ADMINISTRATOR, 'Administrator'),
         (TEACHER, 'Teacher'),
         (STUDENT, 'Student'),
-        (ANTICHEAT, 'Anticheat')
+        (ANTICHEAT, 'Anticheat'),
     )
     
     role = models.CharField(primary_key=True,max_length=2, choices=ROLES, null = False, default=TEACHER)
@@ -24,9 +21,6 @@ class Role(models.Model):
 class LMSUser(models.Model):
     user = models.OneToOneField(User, primary_key = True, on_delete=models.CASCADE, null = False)
     role = models.ManyToManyField(Role, blank=True)
-    first_name = models.CharField(max_length=10, null=True)
-    last_name = models.CharField(max_length=10, null=True) 
-    email = models.CharField(max_length=20, null=True) 
     
     def is_admin(self):
         return (Role.objects.get(role=Role.ADMINISTRATOR) in self.role.all() or self.user.is_staff or self.user.is_superuser)
@@ -44,6 +38,7 @@ class LMSUser(models.Model):
 
 class Course(models.Model):
     course_id = models.IntegerField(primary_key=True)
+    course_name = models.CharField(max_length=150)
     teacher_id = models.ForeignKey(LMSUser, on_delete=models.CASCADE)
     course_level = models.FloatField()
 
@@ -134,6 +129,6 @@ class Student_Question(models.Model):
         (NULL, 'Null')
     )
     
-    question_status = models.IntegerField(max_length=2, choices=STATUSES, null = True, default=NULL)
+    question_status = models.IntegerField( choices=STATUSES, null = True, default=NULL)
     time_spent = models.IntegerField()
     submit_date = models.DateTimeField()
