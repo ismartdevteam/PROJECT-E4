@@ -17,7 +17,8 @@ logger = logging.getLogger(__name__)
 def courses_view(request):
 	print('ads')
 	try:
-		courses = Course.objects.filter(user=request.user)
+		courses = Course.objects.get(teacher_id=request.user)
+		print(courses)
 	except:
 		raise Http404("404")
  	#print(courses)
