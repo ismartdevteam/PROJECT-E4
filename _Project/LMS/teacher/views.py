@@ -11,7 +11,6 @@ from django.http import Http404, HttpResponseRedirect
 from django.urls import reverse
 logger = logging.getLogger(__name__)
 
-
 @csrf_exempt
 @login_required
 def courses_view(request):
@@ -24,6 +23,6 @@ def courses_view(request):
  	#print(courses)
  	#Getting profss
 
-	return render(request, 'teacher/index.html', {
+	return render(request, 'teacher/courses.html', {
     	'data': courses
 	})
