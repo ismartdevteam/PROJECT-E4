@@ -14,9 +14,9 @@ def index(request):
 	try:
 		chechUser=request.user.lmsuser
 		if chechUser.have_role(Role.TEACHER):
-			return HttpResponseRedirect('/teacher/courses')
+			return HttpResponseRedirect('/teacher/courses_view')
 		else:
-			return HttpResponseRedirect('/student/courses')
+			return HttpResponseRedirect('/student/courses_view')
 	except chechUser.DoesNotExist:
 		return HttpResponseRedirect('/admin')
 
