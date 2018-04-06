@@ -14,7 +14,6 @@ logger = logging.getLogger(__name__)
 @csrf_exempt
 @login_required
 def courses_view(request):
-	print('ads')
 	try:
 		courses = Course.objects.get(teacher_id=request.user)
 		print(courses)
@@ -24,5 +23,5 @@ def courses_view(request):
  	#Getting profss
 
 	return render(request, 'teacher/courses.html', {
-    	'data': courses
+    	'courses': courses
 	})
