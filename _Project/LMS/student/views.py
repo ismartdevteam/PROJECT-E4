@@ -1,20 +1,29 @@
-from django.shortcuts import render,redirect
-from django.http import Http404
-from login.models import Student_Course
-from login.models import Student_Sheet
-from login.models import Student_Exercise
+from django.shortcuts import render
 
-# Create your views here.
+import json, logging
+from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.core.exceptions import PermissionDenied
+from django.http import Http404, HttpResponseRedirect
+from django.urls import reverse
+
+from login.models import Student_Course, Student_Sheet, Student_Exercise
 
 def index(request):
 	#main view for the teacher
 	context = {}
 	return render(request, 'student/index.html', context)
 
+@csrf_exempt
+@login_required
 def courses_view(request):
 	#view for the courses the student is registered
+	context = {}
 	try:
-		Courses = Student_Course.objects.get(student_id=request.user)
+		User_ID = User.objects.get(username = request.user)
+		Courses = Student_Course.objects.filter(student_id = User_ID)
 		context = {'courses' : Courses}
 	except:
 		raise Http404("404")
@@ -23,9 +32,11 @@ def courses_view(request):
 
 def sheets_view(request):
 	#view for the sheets of all the courses taught by the teacher
+	context = {}
 	try:
-		Sheets = Student_Sheet.objects.get(student_id=request.user)
-		context = {'courses' : Courses}
+		User_ID = User.objects.get(username = request.user)
+		Sheets = Student_Sheet.objects.filter(student_id=User_ID)
+		context = {'courses' : Sheets}
 	except:
 		raise Http404("404")
 			
@@ -33,8 +44,10 @@ def sheets_view(request):
 
 def exercises_view(request):
 	#view for the exercises of all the courses by the teacher
+	context = {}
 	try:
-		Exercises = Student_Exercise.objects.get(student_id=request.user)
+		User_ID = User.objects.get(username = request.user)
+		Exercises = Student_Exercise.objects.filter(student_id=User_ID)
 		context = {'courses' : Exercises}
 	except:
 		raise Http404("404")
