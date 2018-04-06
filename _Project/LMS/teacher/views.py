@@ -15,6 +15,7 @@ logger = logging.getLogger(__name__)
 @csrf_exempt
 @login_required
 def courses_view(request):
+	print('ads')
 	try:
 		courses = Course.objects.filter(user=request.user)
 	except:

@@ -12,11 +12,12 @@ logger = logging.getLogger(__name__)
 @csrf_exempt
 def index(request):
 	try:
-		if request.user.pluser.have_role(Role.TEACHER):
+		chechUser=request.user.lmsuser
+		if chechUser.have_role(Role.TEACHER):
 			return HttpResponseRedirect('/teacher/courses')
 		else:
 			return HttpResponseRedirect('/student/courses')
-	except User.DoesNotExist:
+	except chechUser.DoesNotExist:
 		return HttpResponseRedirect('/admin')
 
 

@@ -38,7 +38,7 @@ class LMSUser(models.Model):
 class Course(models.Model):
     course_id = models.IntegerField(primary_key=True)
     course_name = models.CharField(max_length=150)
-    teacher_id = models.ForeignKey(LMSUser, on_delete=models.CASCADE)
+    teacher_id = models.ForeignKey(User, on_delete=models.CASCADE)
     course_level = models.FloatField()
 
     def __str__(self):
@@ -76,17 +76,17 @@ class Question(models.Model):
 class Connection(models.Model):
     connection_id = models.IntegerField(primary_key=True)
     connection_date = models.DateTimeField()
-    user_id = models.ForeignKey(LMSUser, on_delete=models.CASCADE)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
 
 class Student_Course(models.Model):
     student_course_id = models.IntegerField(primary_key=True)
-    student_id = models.ForeignKey(LMSUser, on_delete=models.CASCADE)
+    student_id = models.ForeignKey(User, on_delete=models.CASCADE)
     course_id = models.ForeignKey(Course, on_delete=models.CASCADE)
     teacher_feedback = models.CharField(max_length=100)
 
 class Student_Sheet(models.Model):
     student_sheet_id = models.IntegerField(primary_key=True)
-    student_id = models.ForeignKey(LMSUser, on_delete=models.CASCADE)
+    student_id = models.ForeignKey(User, on_delete=models.CASCADE)
     sheet_id = models.ForeignKey(Sheet, on_delete=models.CASCADE)
     score = models.FloatField()
     feedback = models.CharField(max_length=100)
@@ -94,7 +94,7 @@ class Student_Sheet(models.Model):
 
 class Student_Exercise(models.Model):
     student_exercise_id = models.IntegerField(primary_key=True)
-    student_id = models.ForeignKey(LMSUser, on_delete=models.CASCADE)
+    student_id = models.ForeignKey(User, on_delete=models.CASCADE)
     exercise_id = models.ForeignKey(Exercise, on_delete=models.CASCADE)
     number_of_attempts = models.IntegerField()
     number_of_tries = models.FloatField()
@@ -112,7 +112,7 @@ class Student_Exercise(models.Model):
 
 class Student_Question(models.Model):
     student_question_id = models.IntegerField(primary_key=True)
-    student_id = models.ForeignKey(LMSUser, on_delete=models.CASCADE)
+    student_id = models.ForeignKey(User, on_delete=models.CASCADE)
     Question_id = models.ForeignKey(Question, on_delete=models.CASCADE)
 
     SKIPPED = 'SK'
