@@ -35,6 +35,9 @@ class LMSUser(models.Model):
         if self.have_role(role):
             self.role.remove(role)
 
+    def __str__(self):
+        return '\nUsername: {}\nRole: {}\n'.format(self.user, self.role)
+
 class Course(models.Model):
     course_id = models.IntegerField(primary_key=True)
     course_name = models.CharField(max_length=150)
