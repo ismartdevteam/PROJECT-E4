@@ -4,4 +4,5 @@ from django.shortcuts import render
 
 def index(request):
 	context = {}
-	return render(request, 'student/index.html', context)
+	
+	return render(request, 'anticheat/index.html', context)
