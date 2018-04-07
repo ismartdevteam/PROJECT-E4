@@ -43,7 +43,8 @@ class Course(models.Model):
     course_name = models.CharField(max_length=150)
     teacher_id = models.ForeignKey(User, on_delete=models.CASCADE)
     course_level = models.FloatField()
-
+    def getSheets(self):
+        return Sheet.objects.filter(course_id=self)
     def __str__(self):
         return '\nID: {}\nName: {}'.format(self.course_id, self.course_name)
 
@@ -54,7 +55,8 @@ class Sheet(models.Model):
     number_exercises = models.IntegerField()
     end_date = models.DateTimeField()
     #sheet_status = finished or not finished #we need something to indicate that a sheet was submitted by the student.
-
+    def getExercises(self):
+        return Exercise.objects.filter(sheet_id=self)
     def __str__(self):
         return '\nSheet ID: {}\nSheet Name: {}'.format(self.sheet_id, self.sheet_name)
 
