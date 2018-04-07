@@ -10,10 +10,15 @@ from django.http import Http404, HttpResponseRedirect
 from django.urls import reverse
 
 from login.models import Student_Course, Student_Sheet, Student_Exercise
-
+@csrf_exempt
+@login_required
 def index(request):
 	#main view for the teacher
-	context = {}
+	User_ID = User.objects.get(username = request.user)
+	number_of_courses_registered = Student_Course.objects.filter(student_id = User_ID).count()
+	number_of_sheets_registered = Student_Sheet.objects.filter(student_id = User_ID).count()
+	number_of_exercises_registered = Student_Exercise.objects.filter(student_id = User_ID).count()
+	context = {'number_of_courses_registered' : number_of_courses_registered, 'number_of_sheets_registered' : number_of_sheets_registered, 'number_of_exercises_registered' : number_of_exercises_registered}
 	return render(request, 'student/index.html', context)
 
 @csrf_exempt
@@ -23,11 +28,15 @@ def courses_view(request):
 	context = {}
 	try:
 		User_ID = User.objects.get(username = request.user)
-		Courses = Student_Course.objects.filter(student_id = User_ID)
-		context = {'courses' : Courses}
+		print(User_ID)
 	except:
 		raise Http404("404")
-			
+		Courses = Student_Course.objects.filter(student_id = User_ID)
+		print(Courses)
+		Courses_Names = Course.objects.filter(student_id = User_ID)
+		print(Courses_Names)
+
+		context = {'courses' : Courses, 'courses_names' : Courses_Names}
 	return render(request, 'student/courses_view.html', context)
 
 def sheets_view(request):
