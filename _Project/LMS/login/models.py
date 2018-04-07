@@ -45,18 +45,18 @@ class Course(models.Model):
     course_level = models.FloatField()
 
     def __str__(self):
-        return '\nCourse ID: {}\nTeacher ID: {}\nCourse Level: {}\n'.format(self.course_id, self.teacher_id, self.course_level)
+        return '\nID: {}\nName: {}'.format(self.course_id, self.course_name)
 
 class Sheet(models.Model):
     sheet_id = models.IntegerField(primary_key=True)
     course_id = models.ForeignKey(Course, on_delete=models.CASCADE)
-    sheet_name = models.CharField(max_length=25)
+    sheet_name = models.CharField(max_length=150)
     number_exercises = models.IntegerField()
     end_date = models.DateTimeField()
     #sheet_status = finished or not finished #we need something to indicate that a sheet was submitted by the student.
 
     def __str__(self):
-        return '\nSheet ID: {}\nCourse ID: {}\nSheet Name: {}\nNumber of Exercises: {}\nEnd Date: {}\n'.format(self.sheet_id, self.course_id, self.sheet_name, self.number_exercises, self.end_date)
+        return '\nSheet ID: {}\nSheet Name: {}'.format(self.sheet_id, self.sheet_name)
 
 class Exercise(models.Model):
     exercise_id = models.IntegerField(primary_key=True)
@@ -67,7 +67,7 @@ class Exercise(models.Model):
     success_rate = models.FloatField()
 
     def __str__(self):
-        return '\nExercise ID: {}\nSheet ID: {}\nScore: {}\nDifficulty Index: {}\nDuration Allowed: {}\nSuccess Rate: {}\n'.format(self.exercise_id, self.sheet_id, self.score, self.difficulty_index, self.duration_allowed, self.success_rate)
+        return '\nExercise ID: {}\nSheet ID: {}\n'.format(self.exercise_id, self.sheet_id)
 
 class Question(models.Model):
     question_id = models.IntegerField(primary_key=True)
