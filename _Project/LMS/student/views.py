@@ -9,7 +9,7 @@ from django.core.exceptions import PermissionDenied
 from django.http import Http404, HttpResponseRedirect
 from django.urls import reverse
 
-from login.models import Student_Course, Student_Sheet, Student_Exercise
+from login.models import Student_Course, Student_Sheet, Student_Exercise, Course, Sheet
 @csrf_exempt
 @login_required
 def index(request):
@@ -24,39 +24,54 @@ def index(request):
 @csrf_exempt
 @login_required
 def courses_view(request):
-	#view for the courses the student is registered
+	#view for the courses the student is registered in
+	courses_names = []
 	context = {}
+	
 	try:
 		User_ID = User.objects.get(username = request.user)
-		print(User_ID)
+		courses = Student_Course.objects.filter(student_id = User_ID)
+
+		for c in courses:
+			course_object = Course.objects.get(course_id = c.course_id.course_id)
+			courses_names.append(course_object.course_name)
 	except:
 		raise Http404("404")
-		Courses = Student_Course.objects.filter(student_id = User_ID)
-		print(Courses)
-		Courses_Names = Course.objects.filter(student_id = User_ID)
-		print(Courses_Names)
-
-		context = {'courses' : Courses, 'courses_names' : Courses_Names}
+	context = {'courses_names' : courses_names}
+	
 	return render(request, 'student/courses_view.html', context)
 
 def sheets_view(request):
-	#view for the sheets of all the courses taught by the teacher
+	#view for the sheets of all the courses the student is registered in
+	sheets_names = []
 	context = {}
+	
 	try:
 		User_ID = User.objects.get(username = request.user)
-		Sheets = Student_Sheet.objects.filter(student_id=User_ID)
-		context = {'courses' : Sheets}
+		sheets = Student_Sheet.objects.filter(student_id=User_ID)
+
+		for s in sheets:
+			sheet_object = Sheet.objects.get(sheet_id = s.sheet_id.sheet_id)
+			sheets_names.append(sheet_object.sheet_name)
 	except:
 		raise Http404("404")
+
+	context = {'sheets_names' : sheets_names}
 			
 	return render(request, 'student/sheets_view.html', context)
 
 def exercises_view(request):
-	#view for the exercises of all the courses by the teacher
+	#view for the exercises of all the sheets of all the courses the student is registered in
+	questions_names = []
 	context = {}
+
 	try:
 		User_ID = User.objects.get(username = request.user)
-		Exercises = Student_Exercise.objects.filter(student_id=User_ID)
+		exercises = Student_Exercise.objects.filter(student_id=User_ID)
+
+		for e in exercises:
+			exercise_object = Sheet.objects.get(sheet_id = s.sheet_id.sheet_id)
+
 		context = {'courses' : Exercises}
 	except:
 		raise Http404("404")
