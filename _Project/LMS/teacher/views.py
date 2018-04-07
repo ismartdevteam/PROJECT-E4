@@ -13,15 +13,31 @@ logger = logging.getLogger(__name__)
 
 @csrf_exempt
 @login_required
+def index(request):
+	courses = Course.objects.filter(teacher_id=request.user)
+	number_of_sheets=0
+	number_of_exercises=0
+	for c in courses:
+		sheets=c.getSheets();
+		for e in sheets:
+			number_of_exercises+=e.getExercises().count()
+		number_of_sheets+=sheets.count()
+
+	number_of_exercises= number_of_exercises
+	return render(request, 'teacher/index.html', {
+		'title':'Courses',
+    	'courses': courses,
+    	'number_of_sheets':number_of_sheets,
+    	'number_of_exercises':number_of_exercises
+	})
+@csrf_exempt
+@login_required
 def courses_view(request):
-	try:
-		courses = Course.objects.get(teacher_id=request.user)
-		print(courses)
-	except:
-		raise Http404("404")
- 	#print(courses)
- 	#Getting profss
+	courses = Course.objects.filter(teacher_id=request.user)
 
 	return render(request, 'teacher/courses.html', {
-    	'courses': courses
+		'title':'Courses',
+    	'courses': courses,
+
+
 	})

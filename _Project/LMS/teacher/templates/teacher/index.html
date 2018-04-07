@@ -1,0 +1,333 @@
+{# start Ulzii 05-04 login template from django #}
+{% extends 'teacher/base.html' %}
+{% load static %}
+
+{% block content %}
+
+      <div class="page-inner">
+           
+                <div id="main-wrapper">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-6">
+                            <a href="/teacher/courses_view">
+                            <div class="panel info-box panel-white">
+                                <div class="panel-body">
+                                    <div class="info-box-stats">
+                               
+                                        <p class="counter">{{courses|length }}</p
+                                        <span class="info-box-title">Courses</span>
+                                    </div>
+                                    <div class="info-box-icon">
+                                        <i class="icon-eye"></i>
+                                    </div>
+                                    <div class="info-box-progress">
+                           
+                                    </div>
+                                </div>
+                            </div>
+                            </a>
+                        </div>
+                        <div class="col-lg-3 col-md-6">
+                             <a href="www.google.com">
+                            <div class="panel info-box panel-white">
+                                <div class="panel-body">
+                                    <div class="info-box-stats">
+                                        <p class="counter">{{number_of_sheets}}</p>
+                                        <span class="info-box-title">Sheets</span>
+                                    </div>
+                                    <div class="info-box-icon">
+                                        <i class="icon-eye"></i>
+                                    </div>
+                                    <div class="info-box-progress">
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        </div>
+                        <div class="col-lg-3 col-md-6">
+                             <a href="www.google.com">
+                            <div class="panel info-box panel-white">
+                                <div class="panel-body">
+                                    <div class="info-box-stats">
+                                        <p><span class="counter">{{number_of_exercises}}</span></p>
+                                        <span class="info-box-title">Total number of Exercises</span>
+                                    </div>
+                                    <div class="info-box-icon">
+                                        <i class="icon-eye"></i>
+                                    </div>
+                                    <div class="info-box-progress">
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        </div>
+                        <div class="col-lg-3 col-md-6">
+                            <div class="panel info-box panel-white">
+                                <div class="panel-body">
+                                    <div class="info-box-stats">
+                                        <p class="counter">40</p>
+                                        <span class="info-box-title">New emails recieved</span>
+                                    </div>
+                                    <div class="info-box-icon">
+                                        <i class="icon-envelope"></i>
+                                    </div>
+                                    <div class="info-box-progress">
+                                        <div class="progress progress-xs progress-squared bs-n">
+                                            <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- Row -->
+                   
+                    <div class="row">     
+                    <!-- Bar chart starts here -->
+                    <!-- BEGIN CHART JS -->
+                    
+                        <div class="col-md-6" style="display: none;">
+                            <div class="panel panel-white">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Line Chart</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div>
+                                        <canvas id="chart1" height="150"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="panel panel-white">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Percentage of success – failure</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div>
+                                        <canvas id="chart2" height="150"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <!-- END CHART JS -->
+                    
+                    <!-- BEGIN MORRIS CHART -->
+                        <div class="col-md-6" style="display: none">
+                            <div class="panel panel-white">
+                                <div class="panel-body">
+                                    <div id="morris1"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="panel panel-white">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Number of tests conducted</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div id="morris2" style="height: 265px"></div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="col-md-6" style="display: none">
+                            <div class="panel panel-white">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Line Chart</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div id="morris3"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6" style="display: none">
+                            <div class="panel panel-white">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Donut Chart</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div id="morris4"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END MORRIS CHART -->
+                    </div>
+                                     
+                        <div class="col-md-6" style="display: none;">
+                            <div class="panel panel-white">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Pie Chart</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div>
+                                        <canvas id="chart3" height="150"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6" style="display: none;">
+                            <div class="panel panel-white">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Doughnut Chart</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div>
+                                        <canvas id="chart4" height="150"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="col-md-6" style="display: none;">
+                            <div class="panel panel-white">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Polar Area Chart</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div>
+                                        <canvas id="chart5" height="150"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6" style="display: none;">
+                            <div class="panel panel-white">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Radar Chart</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div>
+                                        <canvas id="chart6" height="150"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                <!-- END CHARTJS -->
+
+                    <!-- START PIE CHART -->
+                        <div class="col-md-6" style="display: none;">
+                            <div class="panel panel-white">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Bar Chart</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div id="flot1"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6" style="display: none;">
+                            <div class="panel panel-white">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Line Chart</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div id="flot2"></div>
+                                </div>
+                            </div>
+                        </div>
+                    
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="panel panel-white">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Number of students took test</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div id="flot3"></div>
+                                </div>
+                            </div>
+                        </div>
+                    <!-- END PIE CHART -->
+
+                    <!-- BEGIN STUDENTS COMPARISON CHART -->
+                        <div class="col-lg-4 col-md-6">
+                            <div class="panel panel-white">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Students Success Comparison</h3><br>
+                                    <p style="color:#ebcc3a; display: inline; z-index: 999; position: absolute;"><strong>2017</strong></p><br>
+                                    <p style="color:#EB3737; display: inline; z-index: 999; position: absolute;"><strong>2018</strong></p>
+                                </div>
+                                <div class="panel-body">
+                                    <div id="sparkline1"></div>
+                                </div>
+                            </div>
+                        </div>
+                    <!-- END STUDENTS COMPARISON CHART -->
+
+                        <div class="col-lg-4 col-md-6">
+                            <div class="panel panel-white">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">Students Messages</h4>
+                                    <div class="panel-control">
+                                        <a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="Reload" class="panel-reload"><i class="icon-reload"></i></a>
+                                    </div>
+                                </div>
+                                <div class="panel-body" style="height:270px">
+                                    <div class="inbox-widget slimscroll">
+                                        <a href="#">
+                                            <div class="inbox-item">
+                                                <div class="inbox-item-img"><img src="{% static "images/avatar2.png" %}" class="img-circle" alt=""></div>
+                                                <p class="inbox-item-author">Sandra Smith</p>
+                                                <p class="inbox-item-text">Good evening professor...</p>
+                                                <p class="inbox-item-date">25 Feb 18</p>
+                                            </div>
+                                        </a>
+                                        <a href="#">
+                                            <div class="inbox-item">
+                                                <div class="inbox-item-img"><img src="{% static "images/avatar3.png" %}" class="img-circle" alt=""></div>
+                                                <p class="inbox-item-author">Christopher</p>
+                                                <p class="inbox-item-text">Hello professor...I've finished my report...</p>
+                                                <p class="inbox-item-date">14 Feb 18</p>
+                                            </div>
+                                        </a>
+                                        <a href="#">
+                                            <div class="inbox-item">
+                                                <div class="inbox-item-img"><img src="{% static "images/avatar4.png" %}" class="img-circle" alt=""></div>
+                                                <p class="inbox-item-author">Amily Lee</p>
+                                                <p class="inbox-item-text">Good morning Professor..Let me know the..</p>
+                                                <p class="inbox-item-date">20 Jan 18</p>
+                                            </div>
+                                        </a>
+                                        <a href="#">
+                                            <div class="inbox-item">
+                                                <div class="inbox-item-img"><img src="{% static "images/avatar5.png" %}" class="img-circle" alt=""></div>
+                                                <p class="inbox-item-author">Nick Doe</p>
+                                                <p class="inbox-item-text">Hello Proffesor...</p>
+                                                <p class="inbox-item-date">15 Jan 18</p>
+                                            </div>
+                                        </a>
+                                        <a href="#">
+                                            <div class="inbox-item">
+                                                <div class="inbox-item-img"><img src="{% static "images/avatar2.png" %}" class="img-circle" alt=""></div>
+                                                <p class="inbox-item-author">Sandra Smith</p>
+                                                <p class="inbox-item-text">Good morning Professor..! I'm working on your...</p>
+                                                <p class="inbox-item-date">18 Dec 17</p>
+                                            </div>
+                                        </a>
+                                        <a href="#">
+                                            <div class="inbox-item">
+                                                <div class="inbox-item-img"><img src="{% static "images/avatar4.png" %}" class="img-circle" alt=""></div>
+                                                <p class="inbox-item-author">Amily Lee</p>
+                                                <p class="inbox-item-text">Good Afternoon Professor..Great to see you again..!</p>
+                                                <p class="inbox-item-date">8 Dec 17</p>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                       
+                        <div class=" col-md-12">
+                            
+                        
+                    </div>
+                </div><!-- Main Wrapper -->
+     
+            </div><!-- Page Inner -->
+
+
+{% endblock %}      
+ {# end Ulzii 05-04 login template from django #}
