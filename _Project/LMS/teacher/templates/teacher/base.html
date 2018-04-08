@@ -65,13 +65,13 @@
     <nav class="profile-menu">
         <div class="profile"><img src="{% static "images/MH.png" %}" width="60" alt="David Green"/><span>David Green</span></div>
         <div class="profile-menu-list">
-           <!-- <a href="#"><i class="fa fa-star"></i><span>Favorites</span></a> -->
-           <a href="#"><i class="fa fa-bell"></i><span>Alerts</span></a>
-           <a href="#"><i class="fa fa-envelope"></i><span>Messages</span></a>
-           <a href="#"><i class="fa fa-comment"></i><span>Comments</span></a>
-       </div>
-   </nav>
-   <button class="close-button" id="close-button">Close Menu</button>
+         <!-- <a href="#"><i class="fa fa-star"></i><span>Favorites</span></a> -->
+         <a href="#"><i class="fa fa-bell"></i><span>Alerts</span></a>
+         <a href="#"><i class="fa fa-envelope"></i><span>Messages</span></a>
+         <a href="#"><i class="fa fa-comment"></i><span>Comments</span></a>
+     </div>
+ </nav>
+ <button class="close-button" id="close-button">Close Menu</button>
 </div>
 <form class="search-form" action="#" method="GET">
     <div class="input-group">
@@ -173,7 +173,7 @@
                             <a href="javascript:void(0);" class="waves-effect waves-button waves-classic show-search"><i class="fa fa-search"></i></a>
                         </li>
                         
-                       
+
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle waves-effect waves-button waves-classic" data-toggle="dropdown">
                                 <span class="user-name">{{request.user}}<i class="fa fa-angle-down"></i></span>
@@ -204,7 +204,7 @@
                             <img src="MH.png" class="img-circle img-responsive" alt="">
                         </div>
                         <div class="sidebar-profile-details">
-                            <span>David Green<br><small>Computer Science</small></span>
+                            <span>{{request.user}}<br><small>Computer Science</small></span>
                         </div>
                     </a>
                 </div>
@@ -212,16 +212,17 @@
             <ul class="menu accordion-menu">
                 <li class="active"><a href="#" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-home"></span><p>Dashboard</p></a></li>
                 <li><a href="#" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-user"></span><p>Profile</p></a></li>
-               
+
                 <li class="droplink"><a href="#" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-briefcase"></span><p>Course</p><span class="arrow"></span></a>
                     <ul class="sub-menu">
-                        <li><a href="#">IMC-4302A Wireless Networks</a></li>
-                        <li><a href="#">IME-4305B Real Time System</a></li>
-                        <li><a href="#">IMC-4702A Advance Algorithm</a></li>
-                        <li><a href="#">IMC-7702A &amp; Machine Learnining</a></li>
+                        {% for data in courses %}
+                        <li><a href="#">{{data.course_name}}</a></li>
+                        {% endfor %}
+
+
                     </ul>
                 </li>
-               
+
             </ul>
         </div><!-- Page Sidebar Inner -->
     </div><!-- Page Sidebar -->
@@ -231,7 +232,7 @@
             <div class="page-breadcrumb">
                 <ol class="breadcrumb">
                     <li><a href="/">Dashboard</a></li>
-                     <li class="active"> {{title}}</li>
+                    <li class="active"> {{title}}</li>
                 </ol>
             </div>
         </div>
@@ -343,6 +344,6 @@
 <script src="{% static "plugins/flot/jquery.flot.min.js" %}"></script>
 <script src="{% static "plugins/flot/jquery.flot.pie.min.js" %}"></script>
 <script src="{% static "js/pages/charts-flot.js" %}"></script>
-
+{% block javascript %}{% endblock %}
 </body>
 </html>

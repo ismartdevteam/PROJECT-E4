@@ -1,0 +1,42 @@
+{# start Ulzii 08-04 teacher-exercises template from django #}
+{% extends 'teacher/base.html' %}
+{% load static %}
+
+{% block content %}
+<div id="main-wrapper">
+	{{exercises_data}}
+	<div class="row">
+		<div class="col-lg-3 col-md-6">
+			<div class="panel info-box panel-white">
+				<div class="panel-body">
+
+					<div class="info-box-stats">
+						<!-- List Items Here -->
+						<ul>
+							
+							{% for data in exercises_data %}
+							<li>
+								<div class="exercise_name">
+									<h3> Course : {{data.course_name}} Sheet: {{data.sheet_name }} - Exercise {{data.exercise.exercise_id}}</h3>
+									<i class="icon-eye"></i>
+								</div>
+							</li>
+							{% endfor %}
+						</ul> 
+
+						<div class="info-box-icon">
+
+						</div>
+
+					</div>
+					<div class="info-box-progress">
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div><!-- Row -->
+</div> <!-- main-wrappe -->
+
+{% endblock %}     
+{# end Ulzii 08-04 teacher-exercises template from django #}

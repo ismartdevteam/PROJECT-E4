@@ -17,18 +17,20 @@ def index(request):
 	courses = Course.objects.filter(teacher_id=request.user)
 	number_of_sheets=0
 	number_of_exercises=0
+	number_of_students=0
 	for c in courses:
 		sheets=c.getSheets();
+		number_of_students+=c.getStudents().count()
 		for e in sheets:
 			number_of_exercises+=e.getExercises().count()
 		number_of_sheets+=sheets.count()
-
 	number_of_exercises= number_of_exercises
 	return render(request, 'teacher/index.html', {
-		'title':'Courses',
+		'title':'Home',
     	'courses': courses,
     	'number_of_sheets':number_of_sheets,
-    	'number_of_exercises':number_of_exercises
+    	'number_of_exercises':number_of_exercises,
+    	'number_of_students':number_of_students
 	})
 @csrf_exempt
 @login_required
@@ -39,5 +41,47 @@ def courses_view(request):
 		'title':'Courses',
     	'courses': courses,
 
+	})
+
+@csrf_exempt
+@login_required
+def exercises_view(request):
+	courses = Course.objects.filter(teacher_id=request.user)
+	exercises_data=list()
+	for c in courses:
+		sheets=c.getSheets();
+		for e in sheets:
+			for ex in e.getExercises():
+				data={ 
+					'course_name':c.course_name,
+					'sheet_name':e.sheet_name,
+					'exercise': ex,
+					}
+				exercises_data.append(data)
+	return render(request, 'teacher/exercises.html', {
+		'title':'Exercises',
+		'courses': courses,
+    	'exercises_data': exercises_data,
 
 	})
+
+def activities(request):
+	print(request.user)
+	courses = Course.objects.filter(teacher_id=request.user)
+	students_datas=list()
+	for c in courses:
+		sheets=c.getSheets();
+		for e in sheets:
+			exercises=e.getExercises()
+			for ex in exercises:
+				for se in ex.getStudentExercises():
+					data={ 
+					'course_name':c.course_name,
+					'sheet_name':e.sheet_name,
+					'student': se,
+					}
+					students_datas.append(data)
+	print(*students_datas, sep = "\n")
+	return render(request, 'teacher/activities.html', {
+      	'students_datas':students_datas,
+    })

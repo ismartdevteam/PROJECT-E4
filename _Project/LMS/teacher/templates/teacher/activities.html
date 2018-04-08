@@ -1,0 +1,25 @@
+<div class="col-lg-4 col-md-6">
+    <div class="panel panel-white">
+        <div class="panel-heading">
+            <h4 class="panel-title">Students Progress</h4>
+            <div class="panel-control">
+                <a onclick="refreshStudent()" data-toggle="tooltip" data-placement="top" title="Reload" class="panel-reload"><i class="icon-reload"></i></a>
+            </div>
+        </div>
+        <div class="panel-body" style="height:270px">
+            <div class="inbox-widget slimscroll">
+                {% for data in students_datas %}
+                <a href="#">
+                    <div class="inbox-item">
+                        <p class="inbox-item-author">{{data.student.student_id}} - Score: {{data.student.score}}</p>
+                        <p class="inbox-item-text">Course: {{data.course_name}}  Sheet: {{data.sheet_name}}  Exercise id: {{data.student.exercise_id}}</p>
+                        <p class="inbox-item-date">{{data.student.submit_date}}</p>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+

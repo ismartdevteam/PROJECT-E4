@@ -45,6 +45,8 @@ class Course(models.Model):
     course_level = models.FloatField()
     def getSheets(self):
         return Sheet.objects.filter(course_id=self)
+    def getStudents(self):
+        return Student_Course.objects.filter(course_id=self)
     def __str__(self):
         return '\nID: {}\nName: {}'.format(self.course_id, self.course_name)
 
@@ -67,7 +69,8 @@ class Exercise(models.Model):
     difficulty_index = models.FloatField()
     duration_allowed = models.TimeField()
     success_rate = models.FloatField()
-
+    def getStudentExercises(self):
+        return Student_Exercise.objects.filter(exercise_id=self).order_by('-submit_date')
     def __str__(self):
         return '\nExercise ID: {}\nSheet ID: {}\n'.format(self.exercise_id, self.sheet_id)
 
@@ -133,6 +136,6 @@ class Student_Question(models.Model):
         (NULL, 'Null')
     )
     
-    question_status = models.IntegerField( choices=STATUSES, null = True, default=NULL)
+    question_status = models.CharField( max_length=2,choices=STATUSES, null = True, default=NULL)
     time_spent = models.IntegerField()
     submit_date = models.DateTimeField()

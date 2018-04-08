@@ -41,5 +41,5 @@ admin.site.register(Student_Course)
 admin.site.register(Student_Sheet)
 
 admin.site.register(Student_Exercise)
-
+admin.site.register(Student_Question)
 admin.site.register(Role)
