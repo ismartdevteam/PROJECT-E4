@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-import json, logging
+import json, logging, datetime
 from login.models import Role, Course, LMSUser
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
@@ -45,17 +45,44 @@ def courses_view(request):
 
 @csrf_exempt
 @login_required
+def sheets_view(request):
+	courses = Course.objects.filter(teacher_id=request.user)
+	sheets_data=list()
+	for c in courses:
+		sheets=c.getSheets();
+		number_of_students=c.getStudents().count()
+		for e in sheets:
+			data={ 
+				'course_name':c.course_name,
+				'sheet':e,
+				}
+			sheets_data.append(data)
+	return render(request, 'teacher/sheets.html', {
+		'title':'Sheets',
+		'courses': courses,
+    	'sheets_data': sheets_data,
+
+	})
+
+@csrf_exempt
+@login_required
 def exercises_view(request):
 	courses = Course.objects.filter(teacher_id=request.user)
 	exercises_data=list()
 	for c in courses:
 		sheets=c.getSheets();
+		number_of_students=c.getStudents().count()
 		for e in sheets:
 			for ex in e.getExercises():
+				number_of_given=ex.getStudentExercises().count()
+				
 				data={ 
 					'course_name':c.course_name,
 					'sheet_name':e.sheet_name,
 					'exercise': ex,
+					'number_of_students':number_of_students,
+					'number_of_given':number_of_given,
+					'progress':number_of_given/number_of_students*100
 					}
 				exercises_data.append(data)
 	return render(request, 'teacher/exercises.html', {
@@ -84,4 +111,5 @@ def activities(request):
 	print(*students_datas, sep = "\n")
 	return render(request, 'teacher/activities.html', {
       	'students_datas':students_datas,
+      	'last_loaded':datetime.datetime.now().strftime('%H:%M %p')
     })

@@ -177,7 +177,7 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle waves-effect waves-button waves-classic" data-toggle="dropdown">
                                 <span class="user-name">{{request.user}}<i class="fa fa-angle-down"></i></span>
-                                <img class="img-circle avatar" src="{% static "images/MH.png" %}" width="40" height="40" alt="">
+                              {#   <img class="img-circle avatar" src="{% static "images/MH.png" %}" width="40" height="40" alt=""> #}
                             </a>
                             <ul class="dropdown-menu dropdown-list" role="menu">
                                 <li role="presentation"><a href="#"><i class="fa fa-user"></i>Profile</a></li>
@@ -227,15 +227,7 @@
         </div><!-- Page Sidebar Inner -->
     </div><!-- Page Sidebar -->
     <div class="page-inner">
-        <div class="page-title">
-            <h3>{{title}}</h3>
-            <div class="page-breadcrumb">
-                <ol class="breadcrumb">
-                    <li><a href="/">Dashboard</a></li>
-                    <li class="active"> {{title}}</li>
-                </ol>
-            </div>
-        </div>
+       
         {# start Ulzii 05-04 login template from django #}
         {% block content %}
         {% endblock %}
