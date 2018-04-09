@@ -3,8 +3,6 @@
 <html>
     
 <head>
-        
-        <!-- Title -->
         <title>LMS | ESIEE</title>
         
         <meta content="width=device-width, initial-scale=1" name="viewport"/>
@@ -20,15 +18,15 @@
         <link href="{% static "plugins/bootstrap/css/bootstrap.min.css" %}" rel="stylesheet" type="text/css"/>
         <link href="{% static "plugins/fontawesome/css/font-awesome.css" %}" rel="stylesheet" type="text/css"/>
         <link href="{% static "plugins/line-icons/simple-line-icons.css" %}" rel="stylesheet" type="text/css"/>  
-        <link href="{% static "plugins/offcanvasmenueffects/css/menu_cornerbox.css" %}" rel="stylesheet" type="text/css"/>	
-        <link href="{% static "plugins/waves/waves.min.css" %}" rel="stylesheet" type="text/css"/>	
+        <link href="{% static "plugins/offcanvasmenueffects/css/menu_cornerbox.css" %}" rel="stylesheet" type="text/css"/>  
+        <link href="{% static "plugins/waves/waves.min.css" %}" rel="stylesheet" type="text/css"/>  
         <link href="{% static "plugins/switchery/switchery.min.css" %}" rel="stylesheet" type="text/css"/>
         <link href="{% static "plugins/3d-bold-navigation/css/style.css" %}" rel="stylesheet" type="text/css"/>
-        <link href="{% static "plugins/slidepushmenus/css/component.css" %}" rel="stylesheet" type="text/css"/>	
-        <link href="{% static "plugins/weather-icons-master/css/weather-icons.min.css" %}" rel="stylesheet" type="text/css"/>	
-        <link href="{% static "plugins/metrojs/MetroJs.min.css" %}" rel="stylesheet" type="text/css"/>	
-        <link href="{% static "plugins/toastr/toastr.min.css" %}" rel="stylesheet" type="text/css"/>	
-        	
+        <link href="{% static "plugins/slidepushmenus/css/component.css" %}" rel="stylesheet" type="text/css"/> 
+        <link href="{% static "plugins/weather-icons-master/css/weather-icons.min.css" %}" rel="stylesheet" type="text/css"/>   
+        <link href="{% static "plugins/metrojs/MetroJs.min.css" %}" rel="stylesheet" type="text/css"/>  
+        <link href="{% static "plugins/toastr/toastr.min.css" %}" rel="stylesheet" type="text/css"/>    
+            
         <!-- Theme Styles -->
         <link href="{% static "css/modern.min.css" %}" rel="stylesheet" type="text/css"/>
         <link href="{% static "css/themes/green.css" %}" class="theme-color" rel="stylesheet" type="text/css"/>
@@ -385,12 +383,14 @@
                                         <ul>
                                             Resgistered Courses
                                             {% for c in courses_names %}
-                                            <li>
-                                            <div class="course_name">
-                                                <h3>{{c}}</h3>
-                                                <i class="icon-eye"></i>
-                                            </div>
-                                            </li>
+                                            <a>
+                                                <li>
+                                                    <div class="course_name" overflow="hidden">
+                                                        <div float="left"><h3>{{c}}</h3></div>
+                                                        <div float="left"><i class="icon-eye"></i></div>
+                                                    </div>
+                                                </li>
+                                            </a>
                                             {% endfor %}
                                         </ul> 
 

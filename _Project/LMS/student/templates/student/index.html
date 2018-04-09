@@ -1,5 +1,4 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html>
     
@@ -39,8 +38,7 @@
         <!--barChart1 related sciprts and functions -->
         <script src="http://d3js.org/d3.v3.min.js"></script>
         <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
-        <link rel="stylesheet- the intern has to be paid at least near 500 euros per months.
-- the duration of the internship is at least 3 months" type="text/css" href="{% static "css/barChart1.css" %}">
+        <link rel="stylesheet" type="text/css" href="{% static "css/barChart1.css" %}">
 
         <!--barChart1 related sciprts and functions -->
 
@@ -409,7 +407,8 @@
                         </a>
                         </div>
                     </div><!-- Row -->
-                       {{JSON_object}}  
+
+ 
                     <div id="barChart1">
 		              
 		            </div>
@@ -518,7 +517,8 @@
         <script src="{% static "plugins/flot/jquery.flot.min.js" %}"></script>
         <script src="{% static "plugins/flot/jquery.flot.pie.min.js" %}"></script>
         <script src="{% static "js/pages/charts-flot.js" %}"></script>
-       <script type='text/javascript'>
+
+       <script>
             var data = {{JSON_object|safe}};
             console.log(data);
          
@@ -558,45 +558,43 @@
 
               svg.call(tip);
 
+            x.domain(data.map(function(d) { return d.name; }));
+            y.domain([0, d3.max(data, function(d) { return d.mark; })]);
 
-           
-                x.domain(data.map(function(d) { return d.name; }));
-                y.domain([0, d3.max(data, function(d) { return d.mark; })]);
+            svg.append("g")
+                .attr("class", "x axis")
+                .attr("transform", "translate(0," + height + ")")
+                .call(xAxis);
 
-                svg.append("g")
-                    .attr("class", "x axis")
-                    .attr("transform", "translate(0," + height + ")")
-                    .call(xAxis);
+            svg.append("g")
+                .attr("class", "y axis")
+                .call(yAxis)
+                .append("text")
+                .attr("transform", "rotate(-90)")
+                .attr("y", 6)
+                .attr("dy", ".71em")
+                .style("text-anchor", "end")
+                .text("Mark");
 
-                svg.append("g")
-                    .attr("class", "y axis")
-                    .call(yAxis)
-                    .append("text")
-                    .attr("transform", "rotate(-90)")
-                    .attr("y", 6)
-                    .attr("dy", ".71em")
-                    .style("text-anchor", "end")
-                    .text("Mark");
+            svg.selectAll(".bar")
+                .data(data)
+                .enter().append("rect")
+                .attr("class", "bar")
+                .attr("x", function(d) { return x(d.name); })
+                .attr("width", x.rangeBand())
+                .attr("y", function(d) { return y(d.mark); })
+                .attr("height", function(d) { return height - y(d.mark); })
+                .on('mouseover', tip.show)
+                .on('mouseout', tip.hide)
 
-                svg.selectAll(".bar")
-                    .data(data)
-                    .enter().append("rect")
-                    .attr("class", "bar")
-                    .attr("x", function(d) { return x(d.name); })
-                    .attr("width", x.rangeBand())
-                    .attr("y", function(d) { return y(d.mark); })
-                    .attr("height", function(d) { return height - y(d.mark); })
-                    .on('mouseover', tip.show)
-                    .on('mouseout', tip.hide)
+            console.log(data)
 
-                console.log(data)
-
-                
-              function type(d) {
-                console.log(d);
-                d.mark = +d.mark;
-                return d;
-              }
+            
+          function type(d) {
+            console.log(d);
+            d.mark = +d.mark;
+            return d;
+          }
               
             
     
