@@ -1,5 +1,5 @@
 from django.shortcuts import render
-
+from django.http import JsonResponse
 import json, logging
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
@@ -13,13 +13,28 @@ from login.models import Student_Course, Student_Sheet, Student_Exercise, Course
 @csrf_exempt
 @login_required
 def index(request):
-	#main view for the teacher
+	#main view for the student
+
+	#Get the student user
 	User_ID = User.objects.get(username = request.user)
+	courses_details = Student_Course.objects.filter(student_id = User_ID)
+
+	JSON_object = []
+	for c in courses_details:
+		course_object = Course.objects.get(course_id = c.course_id.course_id)
+		entry = {'name' : course_object.course_name, 'mark' : c.overall_score}
+		JSON_object.append(entry)
+
+
+	#Get general information about what the student has 
 	number_of_courses_registered = Student_Course.objects.filter(student_id = User_ID).count()
 	number_of_sheets_registered = Student_Sheet.objects.filter(student_id = User_ID).count()
 	number_of_exercises_registered = Student_Exercise.objects.filter(student_id = User_ID).count()
-	context = {'number_of_courses_registered' : number_of_courses_registered, 'number_of_sheets_registered' : number_of_sheets_registered, 'number_of_exercises_registered' : number_of_exercises_registered}
+	#Get general information about what the student has 
+
+	context = {'JSON_object' : JSON_object, 'courses_details' : courses_details, 'number_of_courses_registered' : number_of_courses_registered, 'number_of_sheets_registered' : number_of_sheets_registered, 'number_of_exercises_registered' : number_of_exercises_registered}
 	return render(request, 'student/index.html', context)
+
 
 @csrf_exempt
 @login_required
