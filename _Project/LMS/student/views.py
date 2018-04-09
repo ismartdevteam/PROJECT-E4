@@ -8,7 +8,6 @@ from django.contrib.auth.models import User
 from django.core.exceptions import PermissionDenied
 from django.http import Http404, HttpResponseRedirect
 from django.urls import reverse
-
 from login.models import Student_Course, Student_Sheet, Student_Exercise, Course, Sheet
 @csrf_exempt
 @login_required
@@ -19,13 +18,14 @@ def index(request):
 	User_ID = User.objects.get(username = request.user)
 	courses_details = Student_Course.objects.filter(student_id = User_ID)
 
-	JSON_object = []
+	JSON_object = list()
 	for c in courses_details:
 		course_object = Course.objects.get(course_id = c.course_id.course_id)
-		entry = {'name' : course_object.course_name, 'mark' : c.overall_score}
+		entry = {'name' : course_object.course_name, 'mark' : c.overall_score + 0.0665}
 		JSON_object.append(entry)
-
-
+	print(*JSON_object,sep='\n')
+	JSON_object=json.dumps(JSON_object)
+	print(JSON_object)
 	#Get general information about what the student has 
 	number_of_courses_registered = Student_Course.objects.filter(student_id = User_ID).count()
 	number_of_sheets_registered = Student_Sheet.objects.filter(student_id = User_ID).count()

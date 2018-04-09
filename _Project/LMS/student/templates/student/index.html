@@ -41,92 +41,12 @@
         <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
         <link rel="stylesheet- the intern has to be paid at least near 500 euros per months.
 - the duration of the internship is at least 3 months" type="text/css" href="{% static "css/barChart1.css" %}">
-        <script>var json = JSON.parse('{{JSON_string}}');</script>
-        <script>
 
-            function barChart(data_context){
-              var margin = {top: 40, right: 20, bottom: 30, left: 40},
-                  width = 600 - margin.left - margin.right,
-                  height = 300 - margin.top - margin.bottom;
-
-              var formatPercent = d3.format(".0%");
-
-              var x = d3.scale.ordinal()
-                  .rangeRoundBands([0, width], .1);
-
-              var y = d3.scale.linear()
-                  .range([height, 0]);
-
-              var xAxis = d3.svg.axis()
-                  .scale(x)
-                  .orient("bottom");
-
-              var yAxis = d3.svg.axis()
-                  .scale(y)
-                  .orient("left")
-                  .tickFormat(formatPercent);
-
-              var tip = d3.tip()
-                .attr('class', 'd3-tip')
-                .offset([-10, 0])
-                .html(function(d) {
-                  return "<strong>Mark:</strong> <span style='color:red'>" + d.score + "</span>";
-                })
-
-              var svg = d3.select("#barChart1").append("svg")
-                  .attr("width", width + margin.left + margin.right)
-                  .attr("height", height + margin.top + margin.bottom)
-                  .append("g")
-                  .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-              svg.call(tip);
-
-
-              d3.json(data_context, type, function(error, data) {
-                x.domain(data.map(function(d) { return d.name; }));
-                y.domain([0, d3.max(data, function(d) { return d.score; })]);
-
-                svg.append("g")
-                    .attr("class", "x axis")
-                    .attr("transform", "translate(0," + height + ")")
-                    .call(xAxis);
-
-                svg.append("g")
-                    .attr("class", "y axis")
-                    .call(yAxis)
-                    .append("text")
-                    .attr("transform", "rotate(-90)")
-                    .attr("y", 6)
-                    .attr("dy", ".71em")
-                    .style("text-anchor", "end")
-                    .text("Mark");
-
-                svg.selectAll(".bar")
-                    .data(data)
-                    .enter().append("rect")
-                    .attr("class", "bar")
-                    .attr("x", function(d) { return x(d.name); })
-                    .attr("width", x.rangeBand())
-                    .attr("y", function(d) { return y(d.score); })
-                    .attr("height", function(d) { return height - y(d.score); })
-                    .on('mouseover', tip.show)
-                    .on('mouseout', tip.hide)
-
-                console.log(data)
-
-              });
-                
-              function type(d) {
-                d.score = +d.score;
-                return d;
-              }
-              
-            }
-        </script>
         <!--barChart1 related sciprts and functions -->
 
     </head>
     <body class="page-header-fixed">
+
         <div class="overlay"></div>
 
         <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right" id="cbp-spmenu-s2">
@@ -489,11 +409,11 @@
                         </a>
                         </div>
                     </div><!-- Row -->
-                   
+                       {{JSON_object}}  
                     <div id="barChart1">
-		                <script >barChart(json);</script>
+		              
 		            </div>
-                                     
+                                 
             
                 </div><!-- Main Wrapper -->
                 <div class="page-footer">
@@ -598,6 +518,88 @@
         <script src="{% static "plugins/flot/jquery.flot.min.js" %}"></script>
         <script src="{% static "plugins/flot/jquery.flot.pie.min.js" %}"></script>
         <script src="{% static "js/pages/charts-flot.js" %}"></script>
-        
+       <script type='text/javascript'>
+            var data = {{JSON_object|safe}};
+            console.log(data);
+         
+              var margin = {top: 40, right: 20, bottom: 30, left: 40},
+                  width = 600 - margin.left - margin.right,
+                  height = 300 - margin.top - margin.bottom;
+
+              var formatPercent = d3.format(".0%");
+
+              var x = d3.scale.ordinal()
+                  .rangeRoundBands([0, width], .1);
+
+              var y = d3.scale.linear()
+                  .range([height, 0]);
+
+              var xAxis = d3.svg.axis()
+                  .scale(x)
+                  .orient("bottom");
+
+              var yAxis = d3.svg.axis()
+                  .scale(y)
+                  .orient("left")
+                  .tickFormat(formatPercent);
+
+              var tip = d3.tip()
+                .attr('class', 'd3-tip')
+                .offset([-10, 0])
+                .html(function(d) {
+                  return "<strong>Mark:</strong> <span style='color:red'>" + d.mark + "</span>";
+                })
+
+              var svg = d3.select("#barChart1").append("svg")
+                  .attr("width", width + margin.left + margin.right)
+                  .attr("height", height + margin.top + margin.bottom)
+                  .append("g")
+                  .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+              svg.call(tip);
+
+
+           
+                x.domain(data.map(function(d) { return d.name; }));
+                y.domain([0, d3.max(data, function(d) { return d.mark; })]);
+
+                svg.append("g")
+                    .attr("class", "x axis")
+                    .attr("transform", "translate(0," + height + ")")
+                    .call(xAxis);
+
+                svg.append("g")
+                    .attr("class", "y axis")
+                    .call(yAxis)
+                    .append("text")
+                    .attr("transform", "rotate(-90)")
+                    .attr("y", 6)
+                    .attr("dy", ".71em")
+                    .style("text-anchor", "end")
+                    .text("Mark");
+
+                svg.selectAll(".bar")
+                    .data(data)
+                    .enter().append("rect")
+                    .attr("class", "bar")
+                    .attr("x", function(d) { return x(d.name); })
+                    .attr("width", x.rangeBand())
+                    .attr("y", function(d) { return y(d.mark); })
+                    .attr("height", function(d) { return height - y(d.mark); })
+                    .on('mouseover', tip.show)
+                    .on('mouseout', tip.hide)
+
+                console.log(data)
+
+                
+              function type(d) {
+                console.log(d);
+                d.mark = +d.mark;
+                return d;
+              }
+              
+            
+    
+        </script>
     </body>
 </html>
