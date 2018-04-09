@@ -90,6 +90,7 @@ class Student_Course(models.Model):
     student_course_id = models.IntegerField(primary_key=True)
     student_id = models.ForeignKey(User, on_delete=models.CASCADE)
     course_id = models.ForeignKey(Course, on_delete=models.CASCADE)
+    overall_score = models.IntegerField()
     teacher_feedback = models.CharField(max_length=100)
 
 class Student_Sheet(models.Model):
