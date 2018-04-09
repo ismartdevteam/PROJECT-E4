@@ -41,10 +41,10 @@
         <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
         <link rel="stylesheet- the intern has to be paid at least near 500 euros per months.
 - the duration of the internship is at least 3 months" type="text/css" href="{% static "css/barChart1.css" %}">
-
+        <script>var json = JSON.parse('{{JSON_string}}');</script>
         <script>
 
-            function barChart(){
+            function barChart(data_context){
               var margin = {top: 40, right: 20, bottom: 30, left: 40},
                   width = 600 - margin.left - margin.right,
                   height = 300 - margin.top - margin.bottom;
@@ -81,7 +81,8 @@
 
               svg.call(tip);
 
-              d3.json({'name' : 'A', 'score' : 0.09056}, type, function(error, data) {
+
+              d3.json(data_context, type, function(error, data) {
                 x.domain(data.map(function(d) { return d.name; }));
                 y.domain([0, d3.max(data, function(d) { return d.score; })]);
 
@@ -111,13 +112,15 @@
                     .on('mouseover', tip.show)
                     .on('mouseout', tip.hide)
 
-              });
+                console.log(data)
 
+              });
+                
               function type(d) {
                 d.score = +d.score;
                 return d;
               }
-              console.log(d3)
+              
             }
         </script>
         <!--barChart1 related sciprts and functions -->
@@ -488,7 +491,7 @@
                     </div><!-- Row -->
                    
                     <div id="barChart1">
-		                <script >barChart();</script>
+		                <script >barChart(json);</script>
 		            </div>
                                      
             
