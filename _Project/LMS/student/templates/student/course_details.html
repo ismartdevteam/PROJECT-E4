@@ -37,14 +37,13 @@
 
                 <!-- MORRIS CHARTS STYLE-->
         <link href="{% static "plugins/morris/morris.css" %}" rel="stylesheet" type="text/css"/>
+        
+        <!--barChart1 related sciprts and functions -->
+        <script src="http://d3js.org/d3.v3.min.js"></script>
+        <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+        <link rel="stylesheet" type="text/css" href="{% static "css/barChart1.css" %}">
 
-        <style type="text/css">
-            .invInput {
-                visibility: hidden;
-                float: left;
-            }
-        </style>
-
+        <!--barChart1 related sciprts and functions -->
         
     </head>
     <body class="page-header-fixed">
@@ -376,35 +375,9 @@
                 </div>
                 <div id="main-wrapper">
                     <div class="row">
-                        <div class="col-lg-3 col-md-6">
-                            <div class="panel info-box panel-white">
-                                <div class="panel-body">
-                                    <div class="info-box-stats">
-                                        <!-- List Items Here -->
-                                        <ul>
-                                            Resgistered Courses
-                                            {% for c in courses %}
-                                                <li>
-                                                    <div class="course_name" overflow="hidden">
-                                                        <form action="course_details" method="GET">
-                                                            <input class="invInput" type="text" name="course_name" value="{{c.course_name}}">
-                                                            <div><h3>{{c.course_name}}</h3></div>
-                                                            <div><input type="submit" value="View Course Details" /></div>
-                                                        </form>
-                                                    </div>
-                                                </li>
-                                            {% endfor %}
-                                        </ul> 
-
-                                        <div class="info-box-icon">
-                                            
-                                        </div>
-
-                                    </div>
-                                    <div class="info-box-progress">
-                                    </div>
-                                </div>
-                            </div>
+                        
+                        <div id="barChart1">
+                        
                         </div>
 
                     </div><!-- Row -->
@@ -413,17 +386,14 @@
 					<!-- Bar chart starts here -->
                     <!-- BEGIN CHART JS -->
                     
-                        </div>
+                    </div>
                     
 
                     <div class="row">
                         
-                        </div>
-                       
-                        <div class=" col-md-12">
-                            
-                        
                     </div>
+                       
+                    
                 </div><!-- Main Wrapper -->
                 <div class="page-footer">
                     <p class="no-s">2018 &copy; Learning Managment System.</p>
@@ -527,6 +497,77 @@
         <script src="{% static "plugins/flot/jquery.flot.min.js" %}"></script>
         <script src="{% static "plugins/flot/jquery.flot.pie.min.js" %}"></script>
         <script src="{% static "js/pages/charts-flot.js" %}"></script>
+
+        <script>
+            var data = {{JSON_object|safe}};
+            console.log(data);
+         
+              var margin = {top: 40, right: 20, bottom: 30, left: 40},
+                  width = 600 - margin.left - margin.right,
+                  height = 300 - margin.top - margin.bottom;
+
+              var formatPercent = d3.format(".0%");
+
+              var x = d3.scale.ordinal()
+                  .rangeRoundBands([0, width], .1);
+
+              var y = d3.scale.linear()
+                  .range([height, 0]);
+
+              var xAxis = d3.svg.axis()
+                  .scale(x)
+                  .orient("bottom");
+
+              var yAxis = d3.svg.axis()
+                  .scale(y)
+                  .orient("left")
+                  .tickFormat(formatPercent);
+
+              var tip = d3.tip()
+                .attr('class', 'd3-tip')
+                .offset([-10, 0])
+                .html(function(d) {
+                  return "<strong>Mark:</strong> <span style='color:red'>" + d.mark*100 + "</span>";
+                })
+
+              var svg = d3.select("#barChart1").append("svg")
+                  .attr("width", width + margin.left + margin.right)
+                  .attr("height", height + margin.top + margin.bottom)
+                  .append("g")
+                  .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+              svg.call(tip);
+
+            x.domain(data.map(function(d) { return d.student_name; }));
+            y.domain([0, d3.max(data, function(d) { return d.mark; })]);
+
+            svg.append("g")
+                .attr("class", "x axis")
+                .attr("transform", "translate(0," + height + ")")
+                .call(xAxis);
+
+            svg.append("g")
+                .attr("class", "y axis")
+                .call(yAxis)
+                .append("text")
+                .attr("transform", "rotate(-90)")
+                .attr("y", 6)
+                .attr("dy", ".71em")
+                .style("text-anchor", "end")
+                .text("Mark");
+
+            svg.selectAll(".bar")
+                .data(data)
+                .enter().append("rect")
+                .attr("class", "bar")
+                .attr("x", function(d) { return x(d.student_name); })
+                .attr("width", x.rangeBand())
+                .attr("y", function(d) { return y(d.mark); })
+                .attr("height", function(d) { return height - y(d.mark); })
+                .on('mouseover', tip.show)
+                .on('mouseout', tip.hide)
+            
+        </script>
         
     </body>
 </html>

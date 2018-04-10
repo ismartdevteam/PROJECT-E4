@@ -16,22 +16,25 @@ def index(request):
 
 	#Get the student user
 	User_ID = User.objects.get(username = request.user)
+	#Get the all the course details the student is registered in 
 	courses_details = Student_Course.objects.filter(student_id = User_ID)
 
+	#Creation of JSON object
 	JSON_object = list()
 	for c in courses_details:
 		course_object = Course.objects.get(course_id = c.course_id.course_id)
-		entry = {'name' : course_object.course_name, 'mark' : c.overall_score + 0.0665}
+		entry = {'name' : course_object.course_name, 'mark' : format(c.overall_score, '.2f')}
 		JSON_object.append(entry)
 	print(*JSON_object,sep='\n')
 	JSON_object=json.dumps(JSON_object)
-	print(JSON_object)
-	#Get general information about what the student has 
+	#print(JSON_object)
+
+	#Get # of Courses, Sheets, and Exercises registered by the student 
 	number_of_courses_registered = Student_Course.objects.filter(student_id = User_ID).count()
 	number_of_sheets_registered = Student_Sheet.objects.filter(student_id = User_ID).count()
 	number_of_exercises_registered = Student_Exercise.objects.filter(student_id = User_ID).count()
-	#Get general information about what the student has 
 
+	#Pass the information through the context object
 	context = {'JSON_object' : JSON_object, 'courses_details' : courses_details, 'number_of_courses_registered' : number_of_courses_registered, 'number_of_sheets_registered' : number_of_sheets_registered, 'number_of_exercises_registered' : number_of_exercises_registered}
 	return render(request, 'student/index.html', context)
 
@@ -40,19 +43,19 @@ def index(request):
 @login_required
 def courses_view(request):
 	#view for the courses the student is registered in
-	courses_names = []
+	courses = []
 	context = {}
 	
-	try:
-		User_ID = User.objects.get(username = request.user)
-		courses = Student_Course.objects.filter(student_id = User_ID)
+	#try:
+	User_ID = User.objects.get(username = request.user)
+	courses_details = Student_Course.objects.filter(student_id = User_ID)
 
-		for c in courses:
-			course_object = Course.objects.get(course_id = c.course_id.course_id)
-			courses_names.append(course_object.course_name)
-	except:
-		raise Http404("404")
-	context = {'courses_names' : courses_names}
+	for c in courses_details:
+		course_object = Course.objects.get(course_id = c.course_id.course_id)
+		courses.append(course_object)
+	#except:
+		#raise Http404("404")
+	context = {'courses' : courses}
 	
 	return render(request, 'student/courses_view.html', context)
 
@@ -92,3 +95,31 @@ def exercises_view(request):
 		raise Http404("404")
 			
 	return render(request, 'student/exercises_view.html', context)
+
+@csrf_exempt
+@login_required
+def course_details(request):
+	#view for the details about a course
+	course_name_passed = request.GET.get('course_name')
+
+	#get all the students registered in this course
+	course = Course.objects.get(course_name = course_name_passed)
+	students_registered = Student_Course.objects.filter(course_id = course)
+
+	print(students_registered)
+
+	JSON_object = list()
+
+	for s in students_registered:
+		entry = {'student_name' : '' + s.student_id.last_name + ', ' + s.student_id.first_name, 'mark' : format(s.overall_score, '.2f')}
+		JSON_object.append(entry)
+
+	#print(*JSON_object,sep='\n')
+
+	JSON_object=json.dumps(JSON_object)
+
+	#print(JSON_object)
+
+	context = {'JSON_object' : JSON_object}
+	
+	return render(request, 'student/course_details.html', context)

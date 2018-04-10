@@ -547,7 +547,7 @@
                 .attr('class', 'd3-tip')
                 .offset([-10, 0])
                 .html(function(d) {
-                  return "<strong>Mark:</strong> <span style='color:red'>" + d.mark + "</span>";
+                  return "<strong>Mark:</strong> <span style='color:red'>" + d.mark*100 + "</span>";
                 })
 
               var svg = d3.select("#barChart1").append("svg")
@@ -588,16 +588,7 @@
                 .on('mouseout', tip.hide)
 
             console.log(data)
-
             
-          function type(d) {
-            console.log(d);
-            d.mark = +d.mark;
-            return d;
-          }
-              
-            
-    
         </script>
     </body>
 </html>
