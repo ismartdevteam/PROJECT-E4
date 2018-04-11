@@ -3,45 +3,27 @@
 {% load static %}
 
 {% block content %}
- <div class="page-title">
-            <h3>{{title}}</h3>
-            <div class="page-breadcrumb">
-                <ol class="breadcrumb">
-                    <li><a href="/">Dashboard</a></li>
-                    <li class="active"> {{title}}</li>
-                </ol>
-            </div>
-        </div>
+<div class="page-title">
+	<h3>{{title}}</h3>
+	<div class="page-breadcrumb">
+		<ol class="breadcrumb">
+			<li><a href="/">Dashboard</a></li>
+			<li><a href="/teacher/exercises">Exercises</a></li>
+			<li class="active"> {{title}}</li>
+		</ol>
+	</div>
+</div>
 <div id="main-wrapper">
 	<div class="row">
-		{% for data in exercises_data %}
+		{% for data in students_datas %}
 		<div class="col-md-6">
-			<div class="panel info-box panel-white">
+			<div class="panel panel-white">
+				<div class="panel-heading">
+					<h3 class="panel-title">Student: {{data.student_name}} and exercise {{data.exercise_id}}</h3>
+				</div>
 				<div class="panel-body">
-					<div class="info-box-stats">
-
-						<ul>
-							
-							<li>
-								<div class="exercise_name">
-									<h3> Exercise {{data.exercise.exercise_id}}</h3>
-									<span class="info-box-title">Course : {{data.course_name}} Sheet: {{data.sheet_name }}</span>
-
-								</div>
-							</li>
-
-						</ul> 
-						
-					</div>
-					<div class="info-box-progress">
-						<p>
-							 Students enrollment: {{data.number_of_given}}/{{data.number_of_students}}
-						</p>
-						
-						<div class="progress progress-xs progress-squared bs-n">
-							<div class="progress-bar progress-bar-success" role="progressbar" style="width: {{data.progress}}%">
-							</div>
-						</div>
+					<div class="radarChart{{data.name}}">
+						{# chart1 #}
 					</div>
 				</div>
 			</div>
@@ -53,3 +35,29 @@
 
 {% endblock %}     
 {# end Ulzii 08-04 teacher-students template from django #}
+
+{% block javascript %}
+<script >
+var chart = RadarChart.chart();
+var cfg = chart.config(); // retrieve default config
+var svg = d3.select('body').select('').append('svg')
+.attr('width', cfg.w + cfg.w + 50)
+.attr('height', cfg.h + cfg.h / 4);
+var data = {{JSON_object|safe}};
+
+for (i = 0; i < data.length; i++) { 
+	det=data[i];
+
+}
+
+svg.append('g').classed('single', 1).datum().call(chart);
+
+console.log(data);
+
+
+
+
+
+
+</script>   
+{% endblock %}
