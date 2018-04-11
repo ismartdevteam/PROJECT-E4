@@ -1,0 +1,61 @@
+{# start Ulzii 08-04 teacher-students template from django #}
+{% extends 'teacher/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="page-title">
+	<h3>{{title}}</h3>
+	<div class="page-breadcrumb">
+		<ol class="breadcrumb">
+			<li><a href="/">Dashboard</a></li>
+			<li><a href="/teacher/exercises_view">Exercises</a></li>
+			<li class="active"> {{title}}</li>
+		</ol>
+	</div>
+</div>
+<div id="main-wrapper">
+	<div class="row">
+		{% for data in students_datas %}
+		<div class="col-md-6">
+			<div class="panel panel-white">
+				<div class="panel-heading">
+					<h3 class="panel-title">Student: {{data.student_name}} and exercise {{data.exercise_id}}</h3>
+
+				</div>
+
+				
+				<div class="panel-body">
+					<div class="radarChart{{data.id}}">
+						{# chart1 #}
+					</div>
+				</div>
+
+				<p>Date {{data.date}}</p>
+			</div>
+		</div>
+		{% endfor %}
+	</div><!-- Row -->
+
+</div> <!-- main-wrappe -->
+
+{% endblock %}     
+{# end Ulzii 08-04 teacher-students template from django #}
+
+{% block javascript %}
+<script >
+ // retrieve default config
+
+ {% for data in students_datas %}
+RadarChart.defaultConfig.w = 400;
+RadarChart.defaultConfig.h = 400;
+ RadarChart.draw('.radarChart{{data.id}}', {{data.axes |safe}});
+ {% endfor %}
+
+
+
+
+
+
+
+ </script>   
+ {% endblock %}

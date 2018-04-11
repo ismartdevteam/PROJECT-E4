@@ -14,6 +14,8 @@
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600' rel='stylesheet' type='text/css'>
     <link href="{% static "plugins/pace-master/themes/blue/pace-theme-flash.css" %}" rel="stylesheet"/>
     <link href="{% static "plugins/uniform/css/uniform.default.min.css" %}" rel="stylesheet"/>
+        <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
+    <link rel="stylesheet" href="https://rawgit.com/tpreusse/radar-chart-d3/master/src/radar-chart.css">
     <link href="{% static "plugins/bootstrap/css/bootstrap.min.css" %}" rel="stylesheet" type="text/css"/>
     <link href="{% static "plugins/fontawesome/css/font-awesome.css" %}" rel="stylesheet" type="text/css"/>
     <link href="{% static "plugins/line-icons/simple-line-icons.css" %}" rel="stylesheet" type="text/css"/>  
@@ -36,8 +38,7 @@
     <!-- 3d charts Styles -->
     <link href="{% static "plugins/morris/morris.css" %}" rel="stylesheet" type="text/css"/>
     <link href="{% static "css/d3radar.css" %}" rel="stylesheet" type="text/css"/>
-    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
-    <link rel="stylesheet" href="https://rawgit.com/tpreusse/radar-chart-d3/master/src/radar-chart.css">
+
     <!-- 3d charts Styles -->
 </head>
 <body class="page-header-fixed">
@@ -321,8 +322,9 @@
 
 <!-- start D3Js -->
 <script src="http://d3js.org/d3.v3.min.js"></script>
-<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
-<script src="https://rawgit.com/tpreusse/radar-chart-d3/master/src/radar-chart.js"></script>
+
+<script src="{% static "js/radar-chart.js" %}"></script>
+
 
 <!-- start D3Js -->
 
