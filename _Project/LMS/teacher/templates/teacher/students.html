@@ -1,0 +1,55 @@
+{# start Ulzii 08-04 teacher-students template from django #}
+{% extends 'teacher/base.html' %}
+{% load static %}
+
+{% block content %}
+ <div class="page-title">
+            <h3>{{title}}</h3>
+            <div class="page-breadcrumb">
+                <ol class="breadcrumb">
+                    <li><a href="/">Dashboard</a></li>
+                    <li class="active"> {{title}}</li>
+                </ol>
+            </div>
+        </div>
+<div id="main-wrapper">
+	<div class="row">
+		{% for data in exercises_data %}
+		<div class="col-md-6">
+			<div class="panel info-box panel-white">
+				<div class="panel-body">
+					<div class="info-box-stats">
+
+						<ul>
+							
+							<li>
+								<div class="exercise_name">
+									<h3> Exercise {{data.exercise.exercise_id}}</h3>
+									<span class="info-box-title">Course : {{data.course_name}} Sheet: {{data.sheet_name }}</span>
+
+								</div>
+							</li>
+
+						</ul> 
+						
+					</div>
+					<div class="info-box-progress">
+						<p>
+							 Students enrollment: {{data.number_of_given}}/{{data.number_of_students}}
+						</p>
+						
+						<div class="progress progress-xs progress-squared bs-n">
+							<div class="progress-bar progress-bar-success" role="progressbar" style="width: {{data.progress}}%">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		{% endfor %}
+	</div><!-- Row -->
+
+</div> <!-- main-wrappe -->
+
+{% endblock %}     
+{# end Ulzii 08-04 teacher-students template from django #}
