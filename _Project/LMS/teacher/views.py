@@ -1,7 +1,7 @@
 from django.shortcuts import render
 
 import json, logging, datetime
-from login.models import Role, Course, LMSUser
+from login.models import Role, Course, LMSUser,Exercise
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
@@ -144,7 +144,10 @@ def exercise_detail(request,id):
    #  number_correct_attempts = models.IntegerField(default=0)
    #  student_level = models.CharField(max_length=2)
    #  completed_time = models.IntegerField(default=0)
+
+
 	for student in exercise.getStudentExercises():
+		listStu=[]
 		data= []
 		data.append({"axis":'Score',"value":student.score})
 		data.append({"axis":'Number of tries',"value":student.number_of_tries})
@@ -153,13 +156,19 @@ def exercise_detail(request,id):
 		data.append({"axis":'Total time spent',"value":student.total_time_spent })
 		data.append({"axis":'Score',"value":student.score})
 		data.append({"axis":'Student level',"value":student.student_level })
-		JSON_object=json.dumps(data)
-		students_datas.append( {'exercise_id':exercise.exercise_id,'student_name':student.student_id,"axes":JSON_object})
+		listStu.append({"class":"fuck","axes":data})
+		JSON_object=json.dumps(listStu)
+		students_datas.append({
+			'id':student.student_exercise_id,
+			'exercise_id':exercise.exercise_id,
+			'student_name':student.student_id,
+			'date':student.submit_date,
+			"axes":JSON_object
+			})
 
-	print(*courses_data,sep='\n')
+	print(*students_datas,sep='\n')
 
-	print(JSON_object)
-	return render(request, 'teacher/index.html', {
+	return render(request, 'teacher/exercise_detail.html', {
 		'title':exercise.exercise_id,
     	'courses': courses,
     
