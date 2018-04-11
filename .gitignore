@@ -98,3 +98,4 @@ ENV/
 # mypy
 .mypy_cache/
 *.sqlite3
+_Project/LMS/login/models.py
