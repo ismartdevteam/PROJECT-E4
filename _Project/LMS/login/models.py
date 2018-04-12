@@ -125,11 +125,17 @@ class Student_Exercise(models.Model):
     feedback = models.CharField(max_length=100)
     submit_date = models.DateTimeField()
     ##student_exercisecol = models.CharField(max_length=45)
+    # zhang start 11 april
+    exercise_cheater = models.ManyToManyField(User, related_name='exercise_cheater_id')
+    # zhang end 12 april
 
 class Student_Question(models.Model):
     student_question_id = models.AutoField(primary_key=True)
     student_id = models.ForeignKey(User, on_delete=models.CASCADE)
     Question_id = models.ForeignKey(Question, on_delete=models.CASCADE)
+    # zhang start 11 april
+    question_cheater = models.ManyToManyField(User, related_name='question_cheater_id')
+    # zhang end 12 april
 
     SKIPPED = 'SK'
     CORRECT = 'CR'
@@ -147,3 +153,5 @@ class Student_Question(models.Model):
     question_status = models.CharField( max_length=2,choices=STATUSES, null = True, default=NULL)
     time_spent = models.IntegerField(default=0)
     submit_date = models.DateTimeField()
+
+
