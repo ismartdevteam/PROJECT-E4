@@ -1,0 +1,45 @@
+Project Presentation 12-4-2018
+
+Front-End:
+Designing of the main page and subsequent pages used inside the project. (Index, courses_view, cheets_view, etc...)
+1. Suliman
+2. Abhijeet
+
+Back-end
+Understanding of the interviews and extracting the tables and columns needed for the database.
+1. Shamsuddeen
+2. Zhang
+3. Abhijeet
+4. Suliman
+5. Ulziiburen
+6. Ahmad
+
+Front-end Charts
+Understanding of the interviews and extracting the type of charts needed for the project.
+1. Shamsuddeen
+2. Abhijeet
+3. Zhang
+4. Suliman
+5. Long [one day]
+
+WIMS Installation
+Installation of WIMS on a virtual machine (we are able to achieve this during the last remaining days of the project)
+1. Ulziiburen
+
+UML Design
+Designin of the UML diagram for the relational database
+1. Anosh
+
+Programming
+Programming all aspects in django (Python, HTML, JavaScript)
+1. Ahmad [Students]
+2. Ulziiburen [Teacher]
+3. Suliman [Anticheat]??
+
+TO BE DONE
+
+Code Documentation
+1. Shamsuddeen
+
+Report Writing
+1. Anosh
