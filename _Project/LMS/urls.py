@@ -6,7 +6,7 @@ from login.views import index,logout_view
 
 from django.conf import settings
 urlpatterns = [
-    url(r'^$', index ),
+url(r'^$', index ),
 path('admin/', admin.site.urls),
 path('login/', include('login.urls')),
 path('anticheat/', include('anticheat.urls')),

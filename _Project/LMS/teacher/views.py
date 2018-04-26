@@ -134,7 +134,7 @@ def exercise_detail(request,id):
 	courses = Course.objects.filter(teacher_id=request.user)
 	exercise = Exercise.objects.get(exercise_id=id)
 	students_datas=list()
-	  # number_of_attempts = models.IntegerField(default=0)
+   # number_of_attempts = models.IntegerField(default=0)
    #  number_of_tries = models.FloatField(default=0)
    #  time_spend_by_exercises = models.IntegerField(default=0)
    #  time_spend_succeed = models.IntegerField(default=0)

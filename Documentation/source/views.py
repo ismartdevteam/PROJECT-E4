@@ -15,16 +15,15 @@ logger = logging.getLogger(__name__)
 @csrf_exempt
 
 
-def index(request):
-	"""
-This view is the main and first view that is used to handle user 
-requests. It checks which type of user is logging in based on their role.
-If a user is a teacher, the user is redirected to the teacher dashboard.
-If a user is a student, the user is redirected to the student dashboard.
-Note the the redirection code lines in this function redirects to the urls.py,
-and not directly to the html pages.
-"""
+#This view is the main and first view that is used to handle user 
+#requests. It checks which type of user is logging in based on their role.
+#If a user is a teacher, the user is redirected to the teacher dashboard.
+#If a user is a student, the user is redirected to the student dashboard.
+#Note the the redirection code lines in this function redirects to the urls.py,
+#and not directly to the html pages.
 
+
+def index(request):
 	try:
 		chechUser=request.user.lmsuser
 		if chechUser.have_role(Role.TEACHER):
@@ -37,9 +36,5 @@ and not directly to the html pages.
 		return HttpResponseRedirect('/admin')
 
 def logout_view(request):
-	"""
-This view is used to handle the logout request by the user.
-It will redirect the user to main login page.
-"""
 	logout(request)
 	return HttpResponseRedirect('/')
