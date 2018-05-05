@@ -15,6 +15,12 @@ logger = logging.getLogger(__name__)
 @csrf_exempt
 @login_required
 def index(request):
+
+#This is the main view for the users of type "teacher"
+#This function will query the Course model and get all the related information
+#for this teacher. After, a JSON object is created with this
+#information and is passed as a context to the HTML page "index.html"
+
 	courses = Course.objects.filter(teacher_id=request.user)
 	print(courses)
 	number_of_sheets=0
@@ -60,6 +66,12 @@ def index(request):
 @csrf_exempt
 @login_required
 def courses_view(request):
+
+#This view displays the class names the teacher gives. 
+#This view is displayed when the teacher clicks on the number of classes he is
+#teaches. Information are passed as context to the HTML page
+#"courses_view.html"
+
 	courses = Course.objects.filter(teacher_id=request.user)
 
 	return render(request, 'teacher/courses.html', {
@@ -71,6 +83,7 @@ def courses_view(request):
 @csrf_exempt
 @login_required
 def course_detail(request,id):
+
 	courses = Course.objects.filter(teacher_id=request.user)
 	course = Course.objects.get(course_id=id)
 	sheets=course.getSheets()
