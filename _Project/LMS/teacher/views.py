@@ -12,19 +12,16 @@ from django.urls import reverse
 from django.db.models import Avg
 logger = logging.getLogger(__name__)
 
-#This is the main view for the users of type "Teacher"
-#This function will query the Course, Sheet,
-#and Exercise models and get all the related information
-#for this Teacher. After, a JSON object is created with this
-#information and is passed as a context to the HTML page "index.html"
+
 @csrf_exempt
 @login_required
 def index(request):
-
-#This is the main view for the users of type "teacher"
-#This function will query the Course model and get all the related information
-#for this teacher. After, a JSON object is created with this
-#information and is passed as a context to the HTML page "index.html"
+	"""
+This is the main view for the users of type "Teacher". This function will query the Course, Sheet,
+and Exercise models and get all the related information
+for this Teacher. After, a JSON object is created with this
+information and is passed as a context to the HTML page "index.html"
+"""
 
 	courses = Course.objects.filter(teacher_id=request.user)
 	print(courses)
@@ -68,19 +65,14 @@ def index(request):
     	'JSON_object':JSON_object,
 	})
 
-#This view displays the class names the teaher is taught. 
-#This view is displayed when the teacher clicks on the number of classes he is
-#taught in. Information are passed to the HTML page
-#"courses.html"
 @csrf_exempt
 @login_required
 def courses_view(request):
-
-#This view displays the class names the teacher gives. 
-#This view is displayed when the teacher clicks on the number of classes he is
-#teaches. Information are passed as context to the HTML page
-#"courses_view.html"
-
+	"""
+This view displays the class names the teaher is taught. 
+This view is displayed when the teacher clicks on the number of classes he is
+taught in. Information are passed to the HTML page "courses.html"
+"""
 	courses = Course.objects.filter(teacher_id=request.user)
 
 	return render(request, 'teacher/courses.html', {
@@ -89,13 +81,13 @@ def courses_view(request):
 
 	})
 
-# This view called when teacher clicks on course he teach. And will show all sheets registered on that course.
-# Informations are passed to the HTML page
-#"course_detail.html"
 @csrf_exempt
 @login_required
 def course_detail(request,id):
-
+	"""
+This view called when teacher clicks on course he teach. And will show all sheets registered on that course.
+Informations are passed to the HTML page "course_detail.html"
+"""
 	courses = Course.objects.filter(teacher_id=request.user)
 	course = Course.objects.get(course_id=id)
 	sheets=course.getSheets()
@@ -106,12 +98,13 @@ def course_detail(request,id):
     	'sheets_data':sheets,
 		})
 
-# This view called when teacher clicks number of sheets are registered. And will show all sheets registered for all courses.
-# Informations are passed to the HTML page
-#"sheets.html"
 @csrf_exempt
 @login_required
 def sheets_view(request):
+	"""
+This view called when teacher clicks number of sheets are registered. And will show all sheets registered for all courses.
+Informations are passed to the HTML page "sheets.html"
+"""
 	courses = Course.objects.filter(teacher_id=request.user)
 	sheets_data=list()
 	for c in courses:
@@ -131,12 +124,13 @@ def sheets_view(request):
 	})
 
 
-# This view called when teacher clicks number of exercises are registered. And will show all exercises registered for all courses.
-# Informations are passed to the HTML page
-#"exercises.html"
 @csrf_exempt
 @login_required
 def exercises_view(request):
+	"""
+This view called when teacher clicks number of exercises are registered. And will show all exercises registered for all courses.
+Informations are passed to the HTML page "exercises.html"
+"""
 	courses = Course.objects.filter(teacher_id=request.user)
 	exercises_data=list()
 	for c in courses:
@@ -161,12 +155,14 @@ def exercises_view(request):
 
 	})
 
-# This view called when teacher clicks on specific exercise. And will create the student datas will show in  graph for all students are did exercise.
-# Informations are passed to the HTML page
-#"exercise_detail.html"
 @csrf_exempt
 @login_required
 def exercise_detail(request,id):
+	"""
+This view called when teacher clicks on specific exercise. And will create the student datas will show in  graph for all students are did exercise.
+Informations are passed to the HTML page "exercise_detail.html"
+"""
+
 	courses = Course.objects.filter(teacher_id=request.user)
 	exercise = Exercise.objects.get(exercise_id=id)
 	students_datas=list()
@@ -202,12 +198,12 @@ def exercise_detail(request,id):
 	})
 
 
-# This little view function will show in index page where can see the recent activities of student.
-# If you see the index.html there you can that this view included on line number 101. It makes self individual and can be reloaded whenever.
-# Informations are passed to the HTML page
-#"activities.html"
 def activities(request):
-	
+	"""
+This little view function will show in index page where can see the recent activities of student.
+If you see the index.html there you can that this view included on line number 101. It makes self individual and can be reloaded whenever.
+Informations are passed to the HTML page "activities.html"	
+"""
 	courses = Course.objects.filter(teacher_id=request.user)
 	students_datas=list()
 	for c in courses:

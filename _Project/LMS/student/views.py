@@ -12,11 +12,13 @@ from login.models import Student_Course, Student_Sheet, Student_Exercise, Course
 @csrf_exempt
 @login_required
 def index(request):
-#This is the main view for the users of type "student"
-#This function will query the Student_Course, Student_Sheet,
-#and Student_Exercise models and get all the related information
-#for this student. After, a JSON object is created with this
-#information and is passed as a context to the HTML page "index.html"
+	"""
+This is the main view for the users of type "student"
+This function will query the Student_Course, Student_Sheet,
+and Student_Exercise models and get all the related information
+for this student. After, a JSON object is created with this
+information and is passed as a context to the HTML page "index.html"
+"""
 
 
 	#Get the student user
@@ -47,10 +49,12 @@ def index(request):
 @csrf_exempt
 @login_required
 def courses_view(request):
-#This view displays the class names the student is registered in. 
-#This view is displayed when the student clicks on the number of classes he is
-#enrolled in. Information are passed as context to the HTML page
-#"courses_view.html"
+	"""
+This view displays the class names the student is registered in. 
+This view is displayed when the student clicks on the number of classes he is
+enrolled in. Information are passed as context to the HTML page
+"courses_view.html"
+"""
 
 	courses = []
 	context = {}
@@ -70,10 +74,12 @@ def courses_view(request):
 	return render(request, 'student/courses_view.html', context)
 
 def sheets_view(request):
-#This is the view for the sheets of all the courses the student is registered in.
-#This view is displayed when the student click on a certain sheet name to view more details
-#about the sheet. Information are passed as context to the HTML page
-#"sheets_view.html"
+	"""
+This is the view for the sheets of all the courses the student is registered in.
+This view is displayed when the student click on a certain sheet name to view more details
+about the sheet. Information are passed as context to the HTML page
+"sheets_view.html"
+"""
 
 	sheets_names = []
 	context = {}
@@ -93,10 +99,12 @@ def sheets_view(request):
 	return render(request, 'student/sheets_view.html', context)
 
 def exercises_view(request):
-#This is the view for the exercises of all the sheets of all the courses the student is registered in.
-#This view is displayed when the student click on a certain exercise name to view more details
-#about the exercise. Information are passed as context to the HTML page
-#"exercises_view.html"
+	"""
+This is the view for the exercises of all the sheets of all the courses the student is registered in.
+This view is displayed when the student click on a certain exercise name to view more details
+about the exercise. Information are passed as context to the HTML page
+"exercises_view.html"
+"""
 
 	questions_names = []
 	context = {}
@@ -117,10 +125,12 @@ def exercises_view(request):
 @csrf_exempt
 @login_required
 def course_details(request):
-#This view displays details about the courses the student is registered in. 
-#This view is displayed when the student clicks on a name of a class he is
-#enrolled in. Information are passed as context to the HTML page
-#"course_details.html"
+	"""
+This view displays details about the courses the student is registered in. 
+This view is displayed when the student clicks on a name of a class he is
+enrolled in. Information are passed as context to the HTML page
+"course_details.html"
+"""
 
 	#view for the details about a course
 	course_name_passed = request.GET.get('course_name')
